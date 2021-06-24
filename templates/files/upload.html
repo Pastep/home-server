@@ -1,0 +1,56 @@
+{% extends 'layouts/app.html' %}
+{% load static thumbnail %}
+
+{% block title %}
+    Upload
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'pages/upload.css' %}">
+{% endblock %}
+
+{% block content %}
+
+    <div class="main">
+        <div class="upload">
+            <h1>File upload</h1>
+            <div class="alert"></div>
+
+            <form enctype="multipart/form-data" action="" method="POST" onsubmit="return validate()">
+                {% csrf_token %}
+                <label for="file">Choose file</label>
+                <input id="file" name="file" type="file" hidden>
+                <div class="two">
+                    <div>
+                        <label for="public">Public? </label>
+                        <input id="public" name="public" type="checkbox">
+                    </div>
+                    <input type="submit" value="upload">
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        var label = document.getElementsByTagName('label')[0];
+
+        function validate() {
+            var alert = document.getElementsByClassName('alert')[0];
+            if (!document.getElementById('file').files[0]) {
+                alert.innerText = 'Please input a file';
+                alert.style.display = 'block';
+                return false;
+            }
+
+            return true;
+        }
+
+        document.getElementById('file').onchange = function () {
+            label.innerText = document.getElementById('file').files[0].name;
+            label.style.backgroundColor = "#05445E"
+        };
+
+
+    </script>
+
+{% endblock %}

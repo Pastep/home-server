@@ -1,0 +1,97 @@
+{% extends 'layouts/app.html' %}
+{% load static thumbnail filters %}
+
+{% block title %}
+    Files
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'pages/list.css' %}">
+{% endblock %}
+
+{% block content %}
+
+    <div class="main">
+
+        <div class="filesList">
+            {% for file in files %}
+                <div id="{{ file.id }}" class="files">
+                    <div class="left">
+                        <span class="fiv-sqo fiv-icon-{{ file.file|extension }}"></span>
+                        <h1>{{ file.file|filename }}</h1></div>
+                    <div class="right rightlist">
+                        <a href="#">{{ file.file.size|filesizeformat }}</a>
+                        {% for desiredExtension in extensions %}
+                            {% if file.file|extension in extensions|getItem:desiredExtension %}
+                                <a target="_blank" href="{% url 'files:view' file.id %}">Preview</a>
+                            {% endif %}
+                        {% endfor %}
+                        <a onclick="deleteFile({{ file.id }})">Delete</a>
+                        <a target="_blank" href="{{ file.file.url }}">Download</a>
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+    </div>
+    <div class="message">asd</div>
+    <script>
+        var files = document.getElementsByClassName('files');
+        if (window.screen.width < 500) {
+            for (var i = 0; i < files.length; i++) {
+                if (files[i].childNodes[1].childNodes[3].innerText.length > 15) {
+                    files[i].childNodes[1].childNodes[3].innerText = files[i].childNodes[1].childNodes[3].innerText.substr(0, 15);
+                }
+            }
+        } else {
+            for (var i = 0; i < files.length; i++) {
+                if (files[i].childNodes[1].childNodes[3].innerText.length > 25) {
+                    files[i].childNodes[1].childNodes[3].innerText = files[i].childNodes[1].childNodes[3].innerText.substr(0, 25);
+
+                }
+            }
+        }
+        var message = document.getElementsByClassName('message')[0];
+        var folderOpen = false;
+
+        function folder(element) {
+            var children = element.childNodes;
+            if (folderOpen) {
+                children[1].childNodes[3].childNodes[1].style.transform = "rotate(-90deg) rotateY(0deg)";
+                children[3].style.display = "none";
+                folderOpen = false;
+            } else {
+                children[1].childNodes[3].childNodes[1].style.transform = "rotate(-90deg) rotateY(180deg)";
+                children[3].style.display = "flex";
+                folderOpen = true;
+            }
+
+
+        }
+
+        function deleteFile(id) {
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "{% url 'files:delete' %}", true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    message.innerText = this.responseText;
+                    message.style.opacity = "100";
+                    if (this.responseText == "successfully deleted") {
+                        document.getElementById(id).remove();
+                        message.style.backgroundColor = "lawngreen";
+                    } else {
+                        message.style.backgroundColor = "crimson"
+                    }
+                    setTimeout(function () {
+                        message.style.opacity = "0";
+                    }, 3000);
+                }
+            };
+            xhr.send(JSON.stringify({
+                id: id
+            }));
+        }
+    </script>
+
+{% endblock %}

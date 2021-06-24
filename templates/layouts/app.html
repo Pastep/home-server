@@ -1,0 +1,39 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{ websiteTitle }} - {% block title %}{% endblock %}</title>
+    {#    Main css#}
+    <link rel="stylesheet" href="{% static 'icons/file-icon-classic.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'icons/file-icon-square-o.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'icons/file-icon-vivid.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'icons/file-icon-vectors.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'layouts/app.css' %}">
+
+{#    Included css#}
+
+    {% block css %}
+    
+    {% endblock %}
+
+</head>
+
+<body>
+{% include 'includes/header.html' %}
+
+{% block content %}
+
+{% endblock %}
+
+</body>
+{% block javascript %}
+{% endblock %}
+<script>
+    {% include 'includes/javascripts.js' %}
+</script>
+
+</html>

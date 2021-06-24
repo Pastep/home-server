@@ -1,0 +1,116 @@
+.main {
+    width: 100%;
+    padding: 50px 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login {
+    padding: 50px;
+    background-color: #189AB4;
+    backdrop-filter: blur(2px);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.avatar > img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+    box-shadow: 0 0 5px 1px #75E6DA;
+    transition: 0.5s;
+    cursor: pointer;
+    animation-name: avatar;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
+
+.avatar > img:hover {
+    box-shadow: 0 0 10px 3px #75E6DA;
+    transition: 0.5s;
+}
+
+
+.login > form {
+    color: white;
+}
+
+.login > h1 {
+    color: white;
+    margin-bottom: 20px;
+}
+
+form > input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    resize: vertical;
+    outline: none;
+    box-shadow: 0 0 5px 1px #fff;
+    transition: 0.5s;
+    display: flex;
+    margin-bottom: 20px;
+
+}
+
+form > input:focus {
+    box-shadow: 0 0 10px 3px #fff;
+    transition: 0.5s;
+}
+
+form > button {
+    background-color: #195872;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    width: 100%;
+    padding: 12px;
+    color: white;
+    text-align: center;
+    font-size: 15px;
+    transition: 0.5s;
+}
+
+form > button:hover {
+    cursor: pointer;
+    background-color: #05445E;
+    transition: 0.5s;
+}
+
+.alert {
+    width: 100%;
+    padding: 15px 10px;
+    color: white;
+    text-align: center;
+    font-weight: 900;
+    font-size: 12px;
+    background-color: crimson;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    display: none;
+}
+
+@media screen and (max-width: 500px) {
+    .main {
+        padding: 20px 10px;
+    }
+}
+
+@keyframes avatar {
+    0% {
+        box-shadow: 0 0 5px 1px #75E6DA;
+    }
+    50% {
+        box-shadow: 0 0 10px 3px #75E6DA;
+    }
+    100% {
+        box-shadow: 0 0 5px 1px #75E6DA;
+    }
+}

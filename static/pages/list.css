@@ -1,0 +1,96 @@
+.main {
+    width: 100%;
+    padding: 20px 60px;
+}
+
+.filesList {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.filesList > div {
+    padding: 20px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+    justify-content: space-between;
+    background-color: #2caec8;
+    border-radius: 8px;
+    box-shadow: 0 0px 10px 1px rgba(25, 88, 114, 0.8);
+    transition: 1s;
+}
+
+.left {
+    align-items: center;
+    display: flex;
+}
+
+.left > span {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+}
+
+.left > h1 {
+    color: white;
+}
+
+.rightlist {
+    display: flex;
+}
+
+.rightlist > a:first-of-type {
+    padding: 5px 10px;
+    background-color: #00829b;
+    border-radius: 5px 0 0 5px;
+    color: white;
+    font-size: 15px;
+}
+
+.rightlist > a {
+    border-radius: 0;
+    cursor: pointer;
+}
+
+.rightlist > a:last-of-type {
+    border-radius: 0 5px 5px 0;
+}
+
+.rightlist > a:hover {
+    background-color: #05445E;
+}
+
+.message {
+    opacity: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    width: 200px;
+    height: 50px;
+    background-color: lawngreen;
+    position: fixed;
+    left: calc(50% - 100px);
+    top: 90%;
+    border-radius: 5px;
+    font-size: 20px;
+    transition: 0.5s;
+}
+
+@media screen and (max-width: 500px) {
+    .filesList > div {
+        flex-direction: column;
+    }
+
+    .left {
+        margin-bottom: 20px;
+    }
+
+    .left > h1 {
+        font-size: 20px;
+    }
+}

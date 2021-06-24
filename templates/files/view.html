@@ -1,0 +1,221 @@
+{% extends 'layouts/app.html' %}
+{% load static thumbnail filters %}
+
+{% block title %}
+    File {{ file.id }}
+{% endblock %}
+{% block css %}
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css'>
+    <link href="https://vjs.zencdn.net/7.11.4/video-js.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="{% static 'pages/view.css' %}">
+{% endblock %}
+
+
+{% block content %}
+
+    {% if file.file|extension in extensions.video %}
+        <video
+                id="my-video"
+                class="video-js"
+                controls
+                preload="auto"
+                data-setup="{}"
+        >
+            <source src="{{ file.file.url }}" type="video/{{ file.file|extension }}"/>
+            <p class="vjs-no-js">
+                To view this video please enable JavaScript, and consider upgrading to a
+                web browser that
+            </p>
+        </video>
+
+        <script src="https://vjs.zencdn.net/7.11.4/video.min.js"></script>
+    {% elif file.file|extension in extensions.audio %}
+        <div class="main">
+            <div class="player">
+                <div class="track" id="track">
+                    <div class="title" id="title"></div>
+                    <div class="subtitle" id="subtitle"></div>
+                    <div class="timeline">
+                        <div id="timer">0:00</div>
+                        <div class="progress-container">
+                            <div class="progress" id="progress"></div>
+                        </div>
+                        <div id="duration">0:00</div>
+                    </div>
+                </div>
+                <div class="container-player">
+                    <div class="container-thumb" id="c_thumb">
+                        <div class="thumb" id="thumb"><img
+                                src="data:image/jpeg;base64,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"/>
+                            <div class="axis"></div>
+                        </div>
+                    </div>
+                    <div class="controlsOuter">
+                        <div class="controlsInner">
+                            <div class="btn fas fa-play play" id="playBtn"></div>
+                            <div class="btn fas fa-pause pause" id="pauseBtn"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/howler/2.1.2/howler.min.js'></script>
+        <script>
+            /*!
+ *  Howler.js Audio Player Demo
+ *  howlerjs.com
+ *
+ *  (c) 2013-2019, James Simpson of GoldFire Studios
+ *  goldfirestudios.com
+ *
+ *  MIT License
+ */
+
+            // Cache references to DOM elements.
+            var elms = ['track', 'title', 'subtitle', 'timer', 'duration', 'playBtn', 'pauseBtn', 'progress', 'thumb', 'c-thumb'];
+            elms.forEach(function (elm) {
+                window[elm] = document.getElementById(elm);
+            });
+
+            var Player = function (playlist) {
+                this.playlist = playlist;
+                this.index = 0;
+
+                // Display the title of the first track.
+                title.innerHTML = playlist[0].title;
+                subtitle.innerHTML = playlist[0].subtitle;
+
+            };
+            Player.prototype = {
+                /**
+                 * Play a song in the playlist.
+                 * @param  {Number} index Index of the song in the playlist (leave empty to play the first or current).
+                 */
+                play: function (index) {
+                    var self = this;
+                    var sound;
+
+                    index = typeof index === 'number' ? index : self.index;
+                    var data = self.playlist[index];
+
+                    // If we already loaded this track, use the current one.
+                    // Otherwise, setup and load a new Howl.
+                    if (data.howl) {
+                        sound = data.howl;
+                    } else {
+                        sound = data.howl = new Howl({
+                            src: ["{{ file.file.url }}"],
+                            html5: true, // Force to HTML5 so that the audio can stream in (best for large files).
+                            onplay: function () {
+                                // Display the duration.
+                                duration.innerHTML = self.formatTime(Math.round(sound.duration()));
+                                thumb.classList.add('spin');
+                                c_thumb.classList.add('shadow');
+                                track.classList.add('up');
+                                // Start upating the progress of the track.
+                                requestAnimationFrame(self.step.bind(self));
+                            }
+                        });
+                    }
+
+                    // Begin playing the sound.
+                    sound.play();
+
+                    // Update the track display.
+                    title.innerHTML = data.title;
+                    subtitle.innerHTML = data.subtitle;
+
+                    // Show the pause button.
+                    if (sound.state() === 'loaded') {
+                        playBtn.style.display = 'none';
+                        pauseBtn.style.display = 'block';
+                        thumb.classList.add('spin');
+                        c_thumb.classList.add('shadow');
+                        track.classList.add('up');
+                    } else {
+                        playBtn.style.display = 'none';
+                        pauseBtn.style.display = 'block';
+                        thumb.classList.remove('spin');
+                        c_thumb.classList.remove('shadow');
+                        track.classList.remove('up');
+                    }
+
+                    // Keep track of the index we are currently playing.
+                    self.index = index;
+                },
+
+                /**
+                 * Pause the currently playing track.
+                 */
+                pause: function () {
+                    var self = this;
+
+                    // Get the Howl we want to manipulate.
+                    var sound = self.playlist[self.index].howl;
+
+                    // Puase the sound.
+                    sound.pause();
+
+                    // Show the play button.
+                    playBtn.style.display = 'block';
+                    pauseBtn.style.display = 'none';
+                    thumb.classList.remove('spin');
+                    c_thumb.classList.remove('shadow');
+                    track.classList.remove('up');
+
+                },
+
+                /**
+                 * The step called within requestAnimationFrame to update the playback position.
+                 */
+                step: function () {
+                    var self = this;
+
+                    // Get the Howl we want to manipulate.
+                    var sound = self.playlist[self.index].howl;
+
+                    // Determine our current seek position.
+                    var seek = sound.seek() || 0;
+                    timer.innerHTML = self.formatTime(Math.round(seek));
+                    progress.style.width = (((seek / sound.duration()) * 100) || 0) + '%';
+
+                    // If the sound is still playing, continue stepping.
+                    if (sound.playing()) {
+                        requestAnimationFrame(self.step.bind(self));
+                    }
+                },
+
+
+                /**
+                 * Format the time from seconds to M:SS.
+                 * @param  {Number} secs Seconds to format.
+                 * @return {String}      Formatted time.
+                 */
+                formatTime: function (secs) {
+                    var minutes = Math.floor(secs / 60) || 0;
+                    var seconds = (secs - minutes * 60) || 0;
+
+                    return minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+                }
+            };
+
+            // Setup our new audio player class and pass it the playlist.
+            var player = new Player([
+                {
+                    title: '{{ file.file|filename }}',
+                    subtitle: '{{ file.file.size|filesizeformat }}',
+                    file: 'rave_digger',
+                    howl: null
+                }
+            ]);
+
+            // Bind our player controls.
+            playBtn.addEventListener('click', function () {
+                player.play();
+            });
+            pauseBtn.addEventListener('click', function () {
+                player.pause();
+            });
+        </script>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'layouts/app.html' %}
+{% load static thumbnail %}
+
+{% block title %}
+    Login
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'pages/login.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="main">
+        <div class="login">
+            <img src="{% thumbnail object.image|default:'avatars/static/default.png' 100x100 crop %}" alt="userAvatar">
+            <h1>Login</h1>
+            {% if error %}
+                <div class="alert" style="display: block">{{ error }}</div>
+            {% elif success %}
+                <div class="alert" style="display: block;background-color: limegreen;">{{ success }}</div>
+            {% else %}
+                <div class="alert"></div>
+            {% endif %}
+            <form action="" method="POST" onsubmit="return validateform(this)">
+                {% csrf_token %}
+                <input autocomplete="off" type="text" id="username" name="username" placeholder="Username / Email">
+                <input autocomplete="off" type="password" id="password" name="password" placeholder="Password">
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        function validateform(element) {
+            var alert = document.getElementsByClassName('alert');
+            var re = /\S+@\S+\.\S+/;
+            alert = alert[0];
+            if (!element.username.value || !element.password.value) {
+                alert.style.display = "block";
+                alert.innerText = "username or password is required";
+                return false;
+            } else if (element.username.value.includes('@')) {
+                if (!re.test(element.username.value)) {
+                    alert.style.display = "block";
+                    alert.innerText = "Email is incorrect";
+                    return false;
+                } else {
+                    element.username.name = "email"
+                }
+            }
+            return true;
+        }
+    </script>
+{% endblock %}

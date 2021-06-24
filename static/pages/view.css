@@ -1,0 +1,193 @@
+@import url("https://fonts.googleapis.com/css?family=Quicksand:300,400,500,600,700&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Quicksand", sans-serif;
+}
+
+.main {
+  width: 100%;
+  height: calc(100% - 90px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.player {
+  position: relative;
+}
+
+.container-player {
+  background: #fff2f6;
+  border-radius: 15px;
+  padding: 8px;
+  position: relative;
+  z-index: 2;
+  min-width: 350px;
+  display: flex;
+  justify-content: center;
+  box-shadow: 0 0 10px 0 rgba(130, 0, 81, 0.1), 0px 40px 40px -25px rgba(130, 0, 81, 0.5);
+}
+
+.track {
+  position: absolute;
+  top: -45px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  padding: 8px;
+  background: #f5edf0;
+  width: 95%;
+  padding-left: 140px;
+  border-radius: 15px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  z-index: 1;
+  transition: all 0.5s ease-in-out;
+}
+
+.up {
+  top: -68px;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 14px;
+  color: #4f4f4f;
+}
+
+.subtitle {
+  font-weight: bold;
+  font-size: 12px;
+  margin-bottom: 4px;
+  color: #a0a0a0;
+}
+
+.controlsOuter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.controlsInner {
+  background: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.controlsInner .btn {
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+  color: #c2b0c1;
+  padding: 16px;
+  border-radius: 8px;
+}
+.controlsInner .btn:hover {
+  background: #c2b0c1;
+  color: #fff2f6;
+}
+
+.play, .pause {
+  font-size: 32px;
+}
+
+.pause {
+  display: none;
+}
+
+.progress-container, .progress {
+  border-radius: 2px;
+}
+
+.progress-container {
+  background: #e9dbdb;
+  width: 100%;
+  margin: 0 8px;
+}
+
+.timeline {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.progress {
+  height: 4px;
+  background: #fe38ab;
+  width: 0;
+}
+
+.container-thumb {
+  border-radius: 50%;
+  box-shadow: 0px 0px 0px #d18eb88c;
+  transition: all 0.5s ease-in-out;
+  position: absolute;
+  top: -50px;
+  left: 10px;
+}
+
+.shadow {
+  box-shadow: 0px 40px 25px -20px #d18eb88c;
+  top: -60px;
+}
+.shadow .axis {
+  box-shadow: inset 0px 6px 14px #d18eb88c;
+}
+
+.thumb {
+  height: 100px;
+  width: 100px;
+  position: relative;
+  z-index: 1;
+  transition: all 0.5s ease-in-out;
+}
+.thumb .axis {
+  transition: all 0.5s ease-in-out;
+  content: " ";
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: #fff2f6;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+.thumb img {
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: relative;
+}
+
+.spin {
+  animation: spin 4s linear infinite;
+  height: 120px;
+  width: 120px;
+}
+.spin .axis {
+  height: 25px;
+  width: 25px;
+}
+
+.credits {
+  position: absolute;
+  bottom: 10px;
+}
+.credits a {
+  color: #fe38ab;
+  text-decoration: none;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}

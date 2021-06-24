@@ -1,0 +1,88 @@
+{% extends 'layouts/app.html' %}
+{% load static thumbnail %}
+
+{% block title %}
+    Clientarea
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'pages/clientarea.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="main">
+        <div class="login">
+            <div class="avatar">
+                <img id="userAvatar" onclick="avatarClick()" src="{% thumbnail request.user.avatar 100x100 crop %}"
+                     alt="userAvatar">
+            </div>
+            <h1>Clientarea</h1>
+            {% if error %}
+                <div class="alert" style="display: block">{{ error }}</div>
+            {% elif success %}
+                <div class="alert" style="display: block;background-color: limegreen;">{{ success }}</div>
+            {% else %}
+                <div class="alert"></div>
+            {% endif %}
+            <form enctype="multipart/form-data" action="" method="POST" onsubmit="return validateform(this)">
+                {% csrf_token %}
+                <input style="display: none" type="file" hidden name="avatar" id="avatar" onchange="fileChange(this)">
+                <input value="{{ request.user.username }}" autocomplete="off" type="text" id="username" name="username"
+                       placeholder="Username">
+                <input value="{{ request.user.email }}" autocomplete="off" type="text" id="email" name="email"
+                       placeholder="Email">
+                <input autocomplete="off" type="password" id="password" name="password" placeholder="New Password">
+                <button type="submit">Update</button>
+            </form>
+        </div>
+    </div>
+    <script>
+
+        function validateform(element) {
+            var alert = document.getElementsByClassName('alert');
+            var re = /\S+@\S+\.\S+/;
+            alert = alert[0];
+
+
+            if (!element.username.value || !element.email.value) {
+                alert.style.display = "block";
+                alert.innerText = "Please Fill All fields";
+                return false;
+            }
+            if (!re.test(element.email.value)) {
+                alert.style.display = "block";
+                alert.innerText = "Email is incorrect";
+                return false;
+            }
+            return true;
+        }
+
+        function avatarClick() {
+            document.getElementById('avatar').click()
+        }
+
+        function fileChange(element) {
+            var file = element.files[0];
+            var isFind = false
+            var types = [
+                '.jpg',
+                '.jfif',
+                '.png',
+                'jpeg'
+            ]
+            types.forEach((item, counter) => {
+                if (file.name.toLowerCase().includes(item)) {
+                    document.getElementById('userAvatar').src = window.URL.createObjectURL(file);
+                    isFind = true;
+                }
+            })
+            if (!isFind) {
+                var alert = document.getElementsByClassName('alert');
+                alert = alert[0];
+                alert.style.display = "block";
+                alert.innerText = "Image is not compatible";
+                return false;
+            }
+        }
+    </script>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'layouts/app.html' %}
+{% load static thumbnail %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'pages/login.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="main">
+        <div class="login">
+            <img src="{% thumbnail object.image|default:'avatars/static/default.png' 100x100 crop %}" alt="userAvatar">
+            <h1>Register</h1>
+            {% if error %}
+                <div class="alert" style="display: block">{{ error }}</div>
+            {% else %}
+                <div class="alert"></div>
+            {% endif %}
+            <form action="" method="POST" onsubmit="return validateform(this)">
+                {% csrf_token %}
+                <input autocomplete="off" type="text" id="username" name="username" placeholder="Username">
+                <input autocomplete="off" type="text" id="email" name="email" placeholder="Email">
+                <input autocomplete="off" type="password" id="password" name="password" placeholder="Password">
+                <button type="submit">Register</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        function validateform(element) {
+            var alert = document.getElementsByClassName('alert');
+            var re = /\S+@\S+\.\S+/;
+            alert = alert[0];
+
+
+            if (!element.username.value || !element.password.value || !element.email.value) {
+                alert.style.display = "block";
+                alert.innerText = "Please Fill All fields";
+                return false;
+            }
+            if (!re.test(element.email.value)) {
+                alert.style.display = "block";
+                alert.innerText = "Email is incorrect";
+                return false;
+            }
+        return true;
+        }
+    </script>
+{% endblock %}
